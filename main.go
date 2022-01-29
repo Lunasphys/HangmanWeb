@@ -7,7 +7,12 @@ import (
 
 tmpl := template.Must(template.ParseFiles("index.html"))
 
-
+type User struct {
+	Email  string
+	LastName string
+	FirstName string
+	Success bool
+}
 	
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +30,7 @@ func main() {
 			
 		tmpl.Execute(w, data)
 	})
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 un truc de merde
