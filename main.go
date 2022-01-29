@@ -42,5 +42,5 @@ func main() {
 			
 		tmpl1.Execute(w, details)
 	})
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 }
