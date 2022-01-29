@@ -1,4 +1,5 @@
 package main
+
 import (
 	"fmt";
 	"net/http";
@@ -12,19 +13,20 @@ type User struct {
 	Prenom string
 	Success bool
 }
-	
+
+
+
 func main() {
 	
-	fs := http.FileServer(http.Dir("/files/front.css"))
-	http.Handle("/files/front.css/", http.StripPrefix("/files/font.css/", fs)) 
-
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", (fs)) 
 
 
     fmt.Printf("Starting server at port 8080\n")
     if err := http.ListenAndServe(":8080", nil); err != nil {
         log.Fatal(err)
     }
-	tmpl1 := template.Must(template.ParseFiles("index.html"))
+	tmpl1 := template.Must(template.ParseFiles("./static"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			tmpl1.Execute(w, nil)

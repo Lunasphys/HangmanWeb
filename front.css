@@ -1,6 +1,6 @@
 
 body {
-    background-image: url(img/green-blackboard-background-with-chalk.jpg);
+    background-image: url(./img/green-blackboard-background-with-chalk.jpg);
     background-size: cover;
     font-family: Heina ;
     color : white;
@@ -8,7 +8,7 @@ body {
 
 @font-face {
     font-family: "Heina";
-    src: url(font/Heinahurry.ttf);
+    src: url(./font/Heinahurry.ttf);
 }
 
 #schoolboard {
