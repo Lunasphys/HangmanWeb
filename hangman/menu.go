@@ -303,3 +303,21 @@ func displayLoseMessage() {
 	fmt.Println("Votre mot choisi était : ", word)
 	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
 }
+
+func Contains(s string, char rune) bool { // Si une string est contenue dans un tableau
+	for _, a := range s {
+		if a == char {
+			return true
+		}
+	}
+	return false
+}
+
+func Contains1(s []string, char string) bool { // Si une string est contenue dans un tableau
+	for _, a := range s {
+		if a == char {
+			return true
+		}
+	}
+	return false
+}
