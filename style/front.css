@@ -1,0 +1,111 @@
+
+body {
+    background-image: url(./img/green-blackboard-background-with-chalk.jpg);
+    background-repeat: no-repeat;
+    font-family: Heina ;
+    color : white;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+@font-face {
+    font-family: "Heina";
+    src: url(./font/Heinahurry.ttf);
+}
+
+
+a {
+    user-select: none;
+    cursor: pointer;
+}
+
+a:hover{
+    text-decoration: line-through;
+    
+}
+
+h1 {
+    text-align: center;
+    font-size: 51px;
+    position: absolute;
+    left: 35px;
+    top: 32px;
+    right: 20px;
+    z-index: 2;
+}
+
+img.rondraie{
+    z-index: 1;
+}
+.container {
+    display: inline-flex;
+}
+
+div.optiondejeu {
+    position: relative;
+    margin-top: 20%;
+    left: 103%;
+}
+div.commencement {
+    text-align: center;
+    margin-top: 25%;
+}
+
+div.regle {
+    width: 11%;
+    position: absolute;
+    right: 11%;
+    top: 24%;
+}
+
+div#choixtxt {
+    margin-top : 10%
+}
+
+a.choix {
+    margin : 20px
+}
+
+#debut {
+    font-size: 36px;
+}
+
+.titreregle {
+    text-decoration: underline;
+}
+
+.pendudessin {
+    position: absolute;
+    bottom: 3%;
+    left: 7%;
+    transform: rotate(337deg);
+}
+
+.png {
+    position: absolute;
+    filter: invert(1);
+}
+.reveil {
+
+    width: 10%;
+    right: 60px;
+    bottom: 35px;
+}
+.wow {
+    width: 13%;
+    top: 18%;
+    left: 8%;
+    transform: rotate(14deg);
+}
+
+.fleche {
+    width: 10%;
+    top: 40%;
+    left: 20%;
+}
+
+
+.menuOff
+{
+    display: none;
+}

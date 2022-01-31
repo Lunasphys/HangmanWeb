@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 )
 
@@ -16,28 +15,24 @@ type User struct {
 
 func main() {
 
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/",fs)
+	
+	fs := http.FileServer(http.Dir("./style"))
+	http.Handle("/style/", http.StripPrefix("/style/", fs))  
 
 	fmt.Printf("Starting server at port 8080\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
-	}
-	tmpl1 := template.Must(template.ParseFiles("./static"))
+	
+	tmplindex := template.Must(template.ParseFiles("body/index.html"))
+	tmplpage1 := template.Must(template.ParseFiles("body/index.html"))
+	
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			tmpl1.Execute(w, nil)
-			return
-		}
 
-		details := User{
-			Email:   r.FormValue("email"),
-			Nom:     r.FormValue("nom"),
-			Prenom:  r.FormValue("prénom"),
-			Success: true,
-		}
-
-		tmpl1.Execute(w, details)
+		tmplindex.Execute(w, nil)
+		tmplpage1.Execute(w, nil)
 	})
-	http.ListenAndServe(":8080", nil)
+	
+	http.ListenAndServe(":80", nil)
 }
+
+	
+
+
