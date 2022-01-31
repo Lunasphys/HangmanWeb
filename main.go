@@ -18,6 +18,8 @@ func main() {
 	
 	fs := http.FileServer(http.Dir("./style"))
 	http.Handle("/style/", http.StripPrefix("/style/", fs))  
+	fileserver := http.FileServer(http.Dir("./js"))
+	http.Handle("/js/", http.StripPrefix("/js/", fileserver)) 
 
 	fmt.Printf("Starting server at port 8080\n")
 	
@@ -26,6 +28,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		tmplindex.Execute(w, nil)
+
 	})
 	
 	http.ListenAndServe(":80", nil)
