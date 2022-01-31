@@ -22,12 +22,10 @@ func main() {
 	fmt.Printf("Starting server at port 8080\n")
 	
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
-	tmplpage1 := template.Must(template.ParseFiles("body/index.html"))
 	
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		tmplindex.Execute(w, nil)
-		tmplpage1.Execute(w, nil)
 	})
 	
 	http.ListenAndServe(":80", nil)
