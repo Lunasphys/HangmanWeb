@@ -29,7 +29,6 @@ func main() {
 
 		tmplindex.Execute(w, nil)
 	})
-	
 	http.ListenAndServe(":80", nil)
 }
 

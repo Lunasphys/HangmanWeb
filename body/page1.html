@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type ="text/css" href="test2.css" rel="stylesheet">
+    <link type ="text/css" href="../style/page2.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/blblbl.js"></script>
+    <script>
+        function validateAnswer() {
+            var correctAnswers = ['Silence','silence','le silence'];
+            if(correctAnswers.find(goodAnswer => goodAnswer==document.getElementById('name').value)){
+                document.location = 'page1.html';
+            }
+            else {
+                alert('Mauvaise réponse');
+            }
+        }
+        </script>
     <title>Document</title>
 <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
 <body class="background">
@@ -13,10 +25,10 @@
             <h1> Le Jeu du Pendu</h1>
         </div>
         <div class="contain">
-        <p> AZIDHEUZEAORGHAZUOERGUO</p>
+            <input class="input-name"  ontouche="window.addEventListener();" id="name" type="text"> 
         </div>
         <div class="clavier">
-            <div class="firstline">
+            <div class="firstline" >
                 <div class="clavierA">
                     <span>A</span>
                 </div>
@@ -102,5 +114,6 @@
             </div>
     </div>
 </div>
+
 <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d6288936ecca89d',m:'EFggSVEdAtTQx08kNAlReg1g_whxA0XMJuB63oqjpM8-1643627845-0-AVkyI5XmAA4x7ZhCpXJwe8QuSE35w7Ay0fse/VOh4DhrJnqQsw0tkVCwMnxbqqSulA1BolyWQsFjXxxiX/xTYTj/dJ3s+NrGSWv7jxw8dHoKOgpd56GySBGy2dTZJamT1axdnC0Z4WjSkGD6GCzDOKeHU5qd7AhupmnwJ6JYqK9JZ0epamiWhIceS4JTMRoVBw==',s:[0x1cc7fef482,0xfd811ef1ed],}})();</script></body>
 </html>
