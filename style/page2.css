@@ -1,0 +1,53 @@
+.firstline{
+    display: flex;
+    width: 56%;
+    JUSTIFY-CONTENT: SPACE-AROUND;
+}
+.clavier{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    HEIGHT: 40%;
+}
+.secondline{
+    display: flex;
+    width: 56%;
+    JUSTIFY-CONTENT: SPACE-AROUND;
+}
+.thirdline{
+    display: flex;
+    width: 56%;
+    JUSTIFY-CONTENT: SPACE-AROUND;    
+}
+
+.container{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    height:83VH
+}
+.header{
+    margin-bottom: 50px;
+    text-align: center;
+}
+.contain{
+    text-align: center;
+}
+
+.background{
+    background:url("img/green-blackboard-background-with-chalk.jpg")no-repeat center fixed ;
+    height: 100% ;
+}
+
+span{
+    height: 61px;
+    width: 66px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    background: black;
+    color:white
+}

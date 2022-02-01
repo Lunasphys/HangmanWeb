@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/style/front.css" rel="stylesheet" >
+    <script type="text/javascript" src="/js/blblbl.js"></script>
+    <title>HangmanWeb</title>
+</head>
+
+<body>
+    <div class="container">
+        <img class="reveil png" src="/style/img/reveil.png">
+        <img class= "wow png" src="/style/img/wow.png">
+        <img class="pendudessin" src="/style/img/hangman.png">
+        <img class="fleche png" src="/style/img/flechecraie.png">
+        <div class="optiondejeu">
+            <div class="titre">
+                <img class="rondcraie" src="/style/img/round.png">
+                <h1>LE JEU DU PENDU</h1>
+        </div>
+            <div class="commencement">
+                <a id="debut" onclick="buttonclick();">COMMENCER VOTRE PARTIE</a>
+                    <div id="choixtxt" class="menuOff">
+                        <a class="choix premier_choix">Premier choix</a>
+                        <a class="choix second_choix">Second choix</a>
+                        <a class="choix troisieme_choix">Troisième choix</a>
+                    </div>
+            </div>
+    </div>
+        <div class="regle">
+            <div class="titreregle">REGLES DU PENDU</div>
+            <p >Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot, éventuellement avec un nombre limité de tentatives et des thèmes fixés à l’avance. A chaque fois que le joueur devine une lettre, celle-ci est affichée. Dans le cas contraire, le dessin d’un pendu se met à apparaître…</p>
+        </div>
+    </div>
+</body>    
+</html>

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"html/template"
 	"net/http"
 )
 
@@ -14,13 +14,25 @@ type User struct {
 }
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fs := http.FileServer(http.Dir("./static"))
-		http.Handle("/", fs)
-	})
+
+	
+	fs := http.FileServer(http.Dir("./style"))
+	http.Handle("/style/", http.StripPrefix("/style/", fs))  
+	fileserver := http.FileServer(http.Dir("./js"))
+	http.Handle("/js/", http.StripPrefix("/js/", fileserver)) 
+
 	fmt.Printf("Starting server at port 8080\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
-	}
-	http.ListenAndServe(":8080", nil)
+	
+	tmplindex := template.Must(template.ParseFiles("body/index.html"))
+	
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+		tmplindex.Execute(w, nil)
+
+	})
+	http.ListenAndServe(":80", nil)
 }
+
+	
+
+
