@@ -4,32 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type ="text/css" href="../style/page2.css" rel="stylesheet">
-    <script type="text/javascript" src="../js/blblbl.js"></script>
-    <script>
-        function validateAnswer() {
-            var correctAnswers = ['Silence','silence','le silence'];
-            if(correctAnswers.find(goodAnswer => goodAnswer==document.getElementById('name').value)){
-                document.location = 'page1.html';
-            }
-            else {
-                alert('Mauvaise réponse');
-            }
-        }
-        </script>
+    <link type ="text/css" href="/style/page2.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/blblbl.js"></script>
     <title>Document</title>
-<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+</head>
 <body class="background">
     <div class="container">
         <div class="header">
             <h1> Le Jeu du Pendu</h1>
         </div>
         <div class="contain">
-            <input class="input-name"  ontouche="window.addEventListener();" id="name" type="text"> 
+             <h2 id="wordhidden"></h2>
+        </div>
+        <div>
+            <form method="POST">
+                <label>Answer:</label><br />
+                <input type="text" name="answer"><br />
+                <input type="submit">
+            </form>
         </div>
         <div class="clavier">
             <div class="firstline" >
-                <div class="clavierA">
+                <div class="clavierA" >
                     <span>A</span>
                 </div>
                 <div class="clavierB">
