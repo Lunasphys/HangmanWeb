@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	
+	
+	fmt.Printf("Starting server at port 8080\n")
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
 	tmplpage1 := template.Must(template.ParseFiles("body/page1.html"))
 
@@ -15,7 +18,7 @@ func main() {
 	fileserver := http.FileServer(http.Dir("./js"))
 	http.Handle("/js/", http.StripPrefix("/js/", fileserver))
 
-	fmt.Printf("Starting server at port 8080\n")
+	
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
