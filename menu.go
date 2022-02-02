@@ -18,6 +18,7 @@ type Hangman struct {
 	guessedletter []string
 	guessedletter1 []string
 	Answer string
+	UserInput string
 }
 
 var hangman Hangman
@@ -101,6 +102,7 @@ func startGame(filename string) *Hangman {
 	}
 	// trouve le mot et transforme le mot choisi en underscore
 }
+
 func Readword(filename string) []string {
 	file, err := os.ReadFile(filename)
 	if err != nil {
