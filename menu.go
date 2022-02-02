@@ -10,14 +10,26 @@ import (
 	"strings"
 	"time"
 )
+type Hangman struct {
+	deathCount int 
+	count int 
+	wordhidden string
+	word string
+	guessedletter []string
+	guessedletter1 []string
+	Answer string
+}
 
-var deathCount int = 10
-var count int = 0
-var wordhidden string
-var word string
-var guessedletter []string
-var guessedletter1 []string
+var hangman Hangman
 
+func HangmanInit() {
+	hangman = Hangman{
+		deathCount : 10,
+		count : 0,
+	}
+}
+
+ 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 }
@@ -74,15 +86,15 @@ func debut() {
 	}
 }
 
-func startGame(filename string) {
+func startGame(filename string) *Hangman {
 	tw := Readword(filename)
-	word = tw[rand.Intn(len(tw))]
+	hangman.word = tw[rand.Intn(len(tw))]
 
-	wordhidden = wordToUnderscore()
+	hangman.wordhidden = wordToUnderscore()
 
 	for {
-		fmt.Println(wordhidden)
-		if testmot() || !Contains(wordhidden, '_') {
+		fmt.Println(hangman.wordhidden)
+		if testmot() || !Contains(hangman.wordhidden, '_') {
 			displayWinMessage()
 			Retry()
 		}
@@ -110,44 +122,44 @@ func Readword(filename string) []string {
 func wordToUnderscore() string {
 	sampleRegexp := regexp.MustCompile("[a-z,A-Z]")
 
-	input := word
+	input := hangman.word
 
 	result := sampleRegexp.ReplaceAllString(input, "_")
 	return (string(result))
 }
 
 func findAndReplace(letterToReplace string) string {
-	isFound := strings.Index(word, letterToReplace)
+	isFound := strings.Index(hangman.word, letterToReplace)
 	if isFound == -1 {
-		if deathCount > 1 {
-			deathCount--
-			deathCountStage(deathCount)
+		if hangman.deathCount > 1 {
+			hangman.deathCount--
+			deathCountStage(hangman.deathCount)
 			fmt.Println("raté")
-			fmt.Println("Il vous reste", deathCount, "essais")
-			return wordhidden
+			fmt.Println("Il vous reste", hangman.deathCount, "essais")
+			return hangman.wordhidden
 			// mettre à jour le score
 		}
-		if deathCount == 1 {
-			deathCount--
-			deathCountStage(deathCount)
+		if hangman.deathCount == 1 {
+			hangman.deathCount--
+			deathCountStage(hangman.deathCount)
 			displayLoseMessage()
 			Retry()
 		}
 	} else {
-		str3 := []rune(wordhidden)
-		for i, lettre := range word {
+		str3 := []rune(hangman.wordhidden)
+		for i, lettre := range hangman.word {
 			if string(lettre) == letterToReplace {
 				str3[i] = lettre
-				wordhidden = string(str3)
-				fmt.Println(wordhidden)
+				hangman.wordhidden = string(str3)
+				fmt.Println(hangman.wordhidden)
 			}
 		}
 	}
-	return wordhidden
+	return hangman.wordhidden
 }
 
 func testmot() bool {
-	count++
+	hangman.count++
 	countPrint()
 	fmt.Println("Veuillez saisir une lettre ou un mot")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
@@ -155,13 +167,13 @@ func testmot() bool {
 
 	scanner.Scan() // l'utilisateur input dans la console
 	// lis ce que l'utilisateur a écrit
-	println(wordhidden)
+	println(hangman.wordhidden)
 	lettreoumot := scanner.Text()
 	lettreoumot = strings.ToLower(lettreoumot)
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
-	if Contains1(guessedletter, lettreoumot) {
-		fmt.Println("vous avez utilisé les lettres :", guessedletter)
+	if Contains1(hangman.guessedletter, lettreoumot) {
+		fmt.Println("vous avez utilisé les lettres :", hangman.guessedletter)
 		fmt.Println("vous avez deja rentré cette lettre")
 	} else {
 		if err != nil {
@@ -174,18 +186,18 @@ func testmot() bool {
 			return testmot()
 		}
 		if len(lettreoumot) == 1 {
-			guessedletter = append(guessedletter, lettreoumot)
-			fmt.Println("vous avez utilisé les lettres :", guessedletter)
+			hangman.guessedletter = append(hangman.guessedletter, lettreoumot)
+			fmt.Println("vous avez utilisé les lettres :", hangman.guessedletter)
 			findAndReplace(lettreoumot)
-		} else if lettreoumot == word {
+		} else if lettreoumot == hangman.word {
 			return true
-		} else if (len(lettreoumot) == len(word)) && wordhidden == word {
+		} else if (len(lettreoumot) == len(hangman.word)) && hangman.wordhidden == hangman.word {
 			return true
 		} else {
-			deathCount -= 2
-			deathCountStage(deathCount)
+			hangman.deathCount -= 2
+			deathCountStage(hangman.deathCount)
 			fmt.Println("Vous n'avez pas trouvé le bon mot")
-			fmt.Println("Il vous reste", deathCount, "essais")
+			fmt.Println("Il vous reste", hangman.deathCount, "essais")
 		}
 	}
 	return false
@@ -202,7 +214,6 @@ func deathCountStage(death int) {
 
 	var start int
 	var end int
-
 	if death == 9 {
 		start = 0
 		end = 7
@@ -254,18 +265,19 @@ func deathCountStage(death int) {
 
 // Compte le nombre de tour
 func countPrint() {
-	if count == 1 {
-		fmt.Println("------------", count, "er tour", "-------------")
+
+	if hangman.count == 1 {
+		fmt.Println("------------", hangman.count, "er tour", "-------------")
 	}
-	if count > 1 {
-		fmt.Println("------------", count, "ème tour", "-------------")
+	if hangman.count > 1 {
+		fmt.Println("------------", hangman.count, "ème tour", "-------------")
 	}
 }
 
 func Retry() {
-	count = 0
-	deathCount = 10
-	guessedletter = guessedletter1
+	hangman.count = 0
+	hangman.deathCount = 10
+	hangman.guessedletter = hangman.guessedletter1
 	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
@@ -279,7 +291,7 @@ func Retry() {
 	switch o {
 	case "1":
 		Clear()
-		guessedletter = guessedletter1
+		hangman.guessedletter = hangman.guessedletter1
 		debut()
 	case "2":
 		os.Exit(2)
@@ -292,15 +304,15 @@ func Retry() {
 
 func displayWinMessage() {
 	fmt.Println()
-	fmt.Println("Tu as découvert le bon mot en ", count, " essai")
-	fmt.Println("Votre mot était: ", word)
+	fmt.Println("Tu as découvert le bon mot en ", hangman.count, " essai")
+	fmt.Println("Votre mot était: ", hangman.word)
 	fmt.Println("Bravo, vous avez sauvé le pendu")
 }
 
 func displayLoseMessage() {
 	fmt.Println()
 	fmt.Println("Raté ! Tu n'as pas réussi à découvrir le mot")
-	fmt.Println("Votre mot choisi était : ", word)
+	fmt.Println("Votre mot choisi était : ", hangman.word)
 	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
 }
 
