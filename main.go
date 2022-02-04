@@ -3,10 +3,13 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
 	startGame("./words.txt")
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
 	tmplpage1 := template.Must(template.ParseFiles("body/page1.html"))
