@@ -89,6 +89,7 @@ func wordToUnderscore() string {
 }
 
 func findAndReplace(letterToReplace string) {
+hangman.Count++
 	if len(letterToReplace) != 0 {
 		for _,guess := range hangman.Guessedletter {
 			if letterToReplace == guess {
@@ -97,6 +98,7 @@ func findAndReplace(letterToReplace string) {
 		}
 		hangman.Guessedletter = append(hangman.Guessedletter, letterToReplace)
 	}	
+
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
 			print(2)
@@ -242,16 +244,6 @@ func deathCountStage() int {
 	return index
 }
 
-// Compte le nombre de tour
-func countPrint() {
-
-	if hangman.Count == 1 {
-		fmt.Println("------------", hangman.Count, "er tour", "-------------")
-	}
-	if hangman.Count > 1 {
-		fmt.Println("------------", hangman.Count, "ème tour", "-------------")
-	}
-}
 
 func GameState() {
 	if testmot() || !Contains(hangman.WordHidden, '_') {
@@ -272,19 +264,6 @@ func Retry() {
 	
 }
 
-func displayWinMessage() {
-	fmt.Println()
-	fmt.Println("Tu as découvert le bon mot en ", hangman.Count, " essai")
-	fmt.Println("Votre mot était: ", hangman.Word)
-	fmt.Println("Bravo, vous avez sauvé le pendu")
-}
-
-func displayLoseMessage() {
-	fmt.Println()
-	fmt.Println("Raté ! Tu n'as pas réussi à découvrir le mot")
-	fmt.Println("Votre mot choisi était : ", hangman.Word)
-	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
-}
 
 func Contains(s string, char rune) bool { // Si une string est contenue dans un tableau
 	for _, a := range s {

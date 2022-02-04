@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	
 	rand.Seed(time.Now().UTC().UnixNano())
 	startGame("./words.txt")
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
