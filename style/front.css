@@ -63,7 +63,9 @@ div#choixtxt {
 }
 
 a.choix {
-    margin : 20px
+    margin : 20px;
+    font-size: 20px;
+    color:white;
 }
 
 #debut {
@@ -108,4 +110,9 @@ a.choix {
 .menuOff
 {
     display: none;
+}
+
+.choix{
+    font-size: 20px;
+    color:white;
 }

@@ -18,9 +18,11 @@
             <p id="guessedletter">Lettre utilisé : {{.Guessedletter}}</p>
             {{if (eq .GameState 1)}}
                 <p>Bravo vous avez gagné</p>
+                <a class="retour"href="/">Retour à l'accueil</a>
             {{end}}
             {{if (eq .GameState 2)}}
                 <p>Vous avez perdu</p>
+                <a class="retour"href="/">Retour à l'accueil</a>
             {{end}}
             {{if (eq .GameState 0)}}
             <p id="Nombredessaie">Nombre d'essais : {{.Count}} </p>

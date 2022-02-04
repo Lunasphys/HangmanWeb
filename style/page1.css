@@ -54,3 +54,8 @@ span{
     width : 30%;
     position: fixed;
 }
+
+a.retour{
+    font-size: 20px;
+    color:white;
+}

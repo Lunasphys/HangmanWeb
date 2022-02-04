@@ -29,6 +29,10 @@ func main() {
 		print(val)
 		findAndReplace(val)
 		testEndGame()
+
+		if (r.Method != http.MethodPost) {
+			startGame("./words.txt")
+		  }
 		tmplpage1.Execute(w, hangman)
 	})
 	fmt.Println("Starting server on port 80")
