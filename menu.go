@@ -137,6 +137,14 @@ func wordToUnderscore() string {
 }
 
 func findAndReplace(letterToReplace string) {
+	if len(letterToReplace) != 0 {
+		for _,guess := range hangman.Guessedletter {
+			if letterToReplace == guess {
+				return 
+			}
+		}
+		hangman.Guessedletter = append(hangman.Guessedletter, letterToReplace)
+	}	
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
 			print(2)
@@ -149,7 +157,7 @@ func findAndReplace(letterToReplace string) {
 		}
 		return
 	}
-
+	
 	isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
 		if hangman.DeathCount >= 1 {
@@ -179,34 +187,24 @@ func testEndGame() {
 
 func testmot() bool {
 	hangman.Count++
-	countPrint()
-	fmt.Println("Veuillez saisir une lettre ou un mot")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
 	scanner := bufio.NewScanner(os.Stdin)
-
 	scanner.Scan() // l'utilisateur input dans la console
 	// lis ce que l'utilisateur a écrit
-	println(hangman.WordHidden)
 	lettreoumot := scanner.Text()
 	lettreoumot = strings.ToLower(lettreoumot)
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
 	if Contains1(hangman.Guessedletter, lettreoumot) {
-		fmt.Println("vous avez utilisé les lettres :", hangman.Guessedletter)
-		fmt.Println("vous avez deja rentré cette lettre")
 	} else {
 		if err != nil {
-			fmt.Printf("Malheureusement cela ne marche pas ")
-			fmt.Printf("Partir %v", lettreoumot)
 			return testmot()
 		}
 		if !isALetter {
-			fmt.Printf("Ce n'est pas une lettre !\n")
 			return testmot()
 		}
 		if len(lettreoumot) == 1 {
-			hangman.Guessedletter = append(hangman.Guessedletter, lettreoumot)
-			fmt.Println("vous avez utilisé les lettres :", hangman.Guessedletter)
+			
 			findAndReplace(lettreoumot)
 		} else if lettreoumot == hangman.Word {
 			return true
@@ -215,8 +213,6 @@ func testmot() bool {
 		} else {
 			hangman.DeathCount -= 2
 			//deathCountStage(hangman.DeathCount)
-			fmt.Println("Vous n'avez pas trouvé le bon mot")
-			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
 		}
 	}
 	return false

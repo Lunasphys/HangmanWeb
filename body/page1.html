@@ -15,11 +15,12 @@
         </div>
         <div class="contain">
             <p id="mot_cache">{{.WordHidden}}</p> 
+            <p id="guessedletter">Lettre utilisé : {{.Guessedletter}}</p>
             {{if (eq .GameState 1)}}
                 <div>Bravo vous avez gagné</div>
             {{else}}
                 <form method="POST">
-                    <label>Answer:</label><br />
+                    <label>Rentrez une lettre ou un mot:</label><br />
                     <input type="text" name="answer" autofocus><br />
                     <input type="submit">
                 </form>
