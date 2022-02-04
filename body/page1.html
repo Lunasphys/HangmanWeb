@@ -15,16 +15,18 @@
         </div>
         <div class="contain">
             <p id="mot_cache">{{.WordHidden}}</p> 
-            {{if (ne.GameState 1)}}
+            {{if (eq .GameState 1)}}
                 <div>Bravo vous avez gagné</div>
+            {{else}}
+                <form method="POST">
+                    <label>Answer:</label><br />
+                    <input type="text" name="answer" autofocus><br />
+                    <input type="submit">
+                </form>
             {{end}}
         </div>
         <div>
-            <form method="POST">
-                <label>Answer:</label><br />
-                <input type="text" name="answer" autofocus><br />
-                <input type="submit">
-            </form>
+            
             <img class ="pendu" src="/style/img/hangman0.png">
         </div>
         <div class="clavier">

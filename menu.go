@@ -30,9 +30,8 @@ func HangmanInit() {
 		Count:          0,
 		Guessedletter:  []string{},
 		Guessedletter1: []string{},
-		GameState : 0,
+		GameState:      0,
 	}
-	hangman.WordHidden = wordToUnderscore()
 }
 
 func Clear() {
@@ -95,6 +94,7 @@ func startGame(filename string) {
 	HangmanInit()
 	tw := Readword(filename)
 	hangman.Word = tw[rand.Intn(len(tw))]
+	hangman.Word = hangman.Word[:len(hangman.Word)-1]
 
 	hangman.WordHidden = wordToUnderscore()
 	/*
@@ -136,10 +136,10 @@ func wordToUnderscore() string {
 	return (string(result))
 }
 
-func findAndReplace(letterToReplace string) string {
-	
+func findAndReplace(letterToReplace string) {
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
+			print(2)
 			hangman.WordHidden = hangman.Word
 		} else {
 			hangman.DeathCount -= 2
@@ -147,19 +147,19 @@ func findAndReplace(letterToReplace string) string {
 		if hangman.DeathCount < 0 {
 			hangman.DeathCount = 0
 		}
-		return ""
+		return
 	}
-		isFound := strings.Index(hangman.Word, letterToReplace)
+
+	isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
 		if hangman.DeathCount >= 1 {
 			hangman.DeathCount--
 			//deathCountStage(hangman.DeathCount)
 			fmt.Println("raté")
 			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
-			return hangman.WordHidden
 			// mettre à jour le score
 		}
-		
+
 	} else {
 		str3 := []rune(hangman.WordHidden)
 		for i, lettre := range hangman.Word {
@@ -169,7 +169,12 @@ func findAndReplace(letterToReplace string) string {
 			}
 		}
 	}
-	return hangman.WordHidden
+}
+
+func testEndGame() {
+	if hangman.WordHidden == hangman.Word {
+		hangman.GameState = 1
+	}
 }
 
 func testmot() bool {
@@ -233,7 +238,7 @@ func deathCountStage() int {
 		end = 7
 		return 9
 	}
-	
+
 	if death == 8 {
 		start = 8
 		end = 15
@@ -302,10 +307,10 @@ func countPrint() {
 func GameState() {
 	if testmot() || !Contains(hangman.WordHidden, '_') {
 		hangman.GameState = 1
-		}
+	}
 	if deathCountStage() == 0 {
 		hangman.GameState = 2
-		}
+	}
 }
 
 func Retry() {
