@@ -16,7 +16,7 @@
         </div>
         <div class="contain">
             <p id="mot_cache">{{.WordHidden}}</p> 
-            {{if (ne.GameState 1)}}
+            {{if (ne .GameState 1)}}
                 <div>Bravo vous avez gagné</div>
             {{end}}
         </div>

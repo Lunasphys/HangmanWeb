@@ -97,6 +97,7 @@ func startGame(filename string) {
 	hangman.Word = tw[rand.Intn(len(tw))]
 
 	hangman.WordHidden = wordToUnderscore()
+	
 	/*
 		for {
 			fmt.Println(hangman.WordHidden)
@@ -299,6 +300,9 @@ func GameState() {
 		}
 	if deathCountStage() == 0 {
 		hangman.GameState = 2
+		}
+	if testmot() || Contains(hangman.WordHidden, '_') {
+		hangman.GameState = 0
 		}
 }
 
