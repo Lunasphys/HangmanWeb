@@ -19,7 +19,7 @@ type Hangman struct {
 	Guessedletter  []string
 	Guessedletter1 []string
 	Answer         string
-	
+	GameState      int
 }
 
 var hangman Hangman
@@ -28,9 +28,9 @@ func HangmanInit() {
 	hangman = Hangman{
 		DeathCount:     10,
 		Count:          0,
-		Word:           "fleur",
 		Guessedletter:  []string{},
 		Guessedletter1: []string{},
+		GameState : 0,
 	}
 	hangman.WordHidden = wordToUnderscore()
 }
@@ -91,20 +91,22 @@ func debut() {
 	}
 }
 
-func startGame(filename string) *Hangman {
+func startGame(filename string) {
+	HangmanInit()
 	tw := Readword(filename)
 	hangman.Word = tw[rand.Intn(len(tw))]
 
 	hangman.WordHidden = wordToUnderscore()
-
-	for {
-		fmt.Println(hangman.WordHidden)
-		if testmot() || !Contains(hangman.WordHidden, '_') {
-			displayWinMessage()
-			Retry()
-		}
-	}
+	/*
+		for {
+			fmt.Println(hangman.WordHidden)
+			if testmot() || !Contains(hangman.WordHidden, '_') {
+				displayWinMessage()
+				Retry()
+			}
+		}*/
 	// trouve le mot et transforme le mot choisi en underscore
+
 }
 
 func Readword(filename string) []string {
@@ -135,14 +137,21 @@ func wordToUnderscore() string {
 }
 
 func findAndReplace(letterToReplace string) string {
+	
 	if len(letterToReplace) > 1 {
-		// teste le mot ici
+		if letterToReplace == hangman.Word {
+			hangman.WordHidden = hangman.Word
+		} else {
+			hangman.DeathCount -= 2
+		}
+		if hangman.DeathCount < 0 {
+			hangman.DeathCount = 0
+		}
 		return ""
 	}
-
-	isFound := strings.Index(hangman.Word, letterToReplace)
+		isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
-		if hangman.DeathCount > 1 {
+		if hangman.DeathCount >= 1 {
 			hangman.DeathCount--
 			//deathCountStage(hangman.DeathCount)
 			fmt.Println("raté")
@@ -150,12 +159,7 @@ func findAndReplace(letterToReplace string) string {
 			return hangman.WordHidden
 			// mettre à jour le score
 		}
-		if hangman.DeathCount == 1 {
-			hangman.DeathCount--
-			//deathCountStage(hangman.DeathCount)
-			displayLoseMessage()
-			Retry()
-		}
+		
 	} else {
 		str3 := []rune(hangman.WordHidden)
 		for i, lettre := range hangman.Word {
@@ -213,7 +217,7 @@ func testmot() bool {
 	return false
 }
 
-func deathCountStage(death int) {
+func deathCountStage() int {
 
 	file, err := os.Open("../hangman.txt")
 	if err != nil {
@@ -221,48 +225,59 @@ func deathCountStage(death int) {
 	}
 	fileScanner := bufio.NewScanner(file)
 	index := 0
-
+	var death int
 	var start int
 	var end int
 	if death == 9 {
 		start = 0
 		end = 7
+		return 9
 	}
+	
 	if death == 8 {
 		start = 8
 		end = 15
+		return 8
 	}
 	if death == 7 {
 		start = 16
 		end = 23
+		return 7
 	}
 	if death == 6 {
 		start = 24
 		end = 31
+		return 6
 	}
 	if death == 5 {
 		start = 32
 		end = 39
+		return 5
 	}
 	if death == 4 {
 		start = 40
 		end = 47
+		return 4
 	}
 	if death == 3 {
 		start = 48
 		end = 55
+		return 3
 	}
 	if death == 2 {
 		start = 56
 		end = 63
+		return 2
 	}
 	if death == 1 {
 		start = 64
 		end = 71
+		return 1
 	}
 	if death == 0 {
 		start = 72
 		end = 79
+		return 0
 	}
 	for fileScanner.Scan() {
 		if index >= start && index <= end {
@@ -270,7 +285,7 @@ func deathCountStage(death int) {
 		}
 		index++
 	}
-
+	return index
 }
 
 // Compte le nombre de tour
@@ -282,6 +297,15 @@ func countPrint() {
 	if hangman.Count > 1 {
 		fmt.Println("------------", hangman.Count, "ème tour", "-------------")
 	}
+}
+
+func GameState() {
+	if testmot() || !Contains(hangman.WordHidden, '_') {
+		hangman.GameState = 1
+		}
+	if deathCountStage() == 0 {
+		hangman.GameState = 2
+		}
 }
 
 func Retry() {
