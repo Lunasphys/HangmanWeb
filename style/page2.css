@@ -51,3 +51,8 @@ span{
     background: black;
     color:white
 }
+
+#mot_cache{
+    letter-spacing: 50px;
+    font-size: 50px ;
+}

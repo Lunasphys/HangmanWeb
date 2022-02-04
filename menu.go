@@ -10,26 +10,30 @@ import (
 	"strings"
 	"time"
 )
+
 type Hangman struct {
-	deathCount int 
-	count int 
-	wordhidden string
-	word string
-	guessedletter []string
-	guessedletter1 []string
-	Answer string
+	DeathCount     int
+	Count          int
+	WordHidden     string
+	Word           string
+	Guessedletter  []string
+	Guessedletter1 []string
+	Answer         string
 }
 
 var hangman Hangman
 
 func HangmanInit() {
 	hangman = Hangman{
-		deathCount : 10,
-		count : 0,
+		DeathCount:     10,
+		Count:          0,
+		Word:           "fleur",
+		Guessedletter:  []string{},
+		Guessedletter1: []string{},
 	}
+	hangman.WordHidden = wordToUnderscore()
 }
 
- 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 }
@@ -38,7 +42,7 @@ func SlowPrint(str ...string) {
 	for _, strpart := range str {
 		for _, char := range strpart {
 			fmt.Print(string(char))
-		
+
 			time.Sleep(40_000_000 * time.Nanosecond)
 		}
 	}
@@ -78,23 +82,23 @@ func debut() {
 	o := scanner.Text()
 	switch o {
 	case "1":
-		startGame("./fichiertxt/words.txt")
+		startGame("../words.txt")
 	case "2":
-		startGame("./fichiertxt/words2.txt")
+		startGame("../words2.txt")
 	case "3":
-		startGame("./fichiertxt/words3.txt")
+		startGame("../words3.txt")
 	}
 }
 
 func startGame(filename string) *Hangman {
 	tw := Readword(filename)
-	hangman.word = tw[rand.Intn(len(tw))]
+	hangman.Word = tw[rand.Intn(len(tw))]
 
-	hangman.wordhidden = wordToUnderscore()
+	hangman.WordHidden = wordToUnderscore()
 
 	for {
-		fmt.Println(hangman.wordhidden)
-		if testmot() || !Contains(hangman.wordhidden, '_') {
+		fmt.Println(hangman.WordHidden)
+		if testmot() || !Contains(hangman.WordHidden, '_') {
 			displayWinMessage()
 			Retry()
 		}
@@ -122,44 +126,48 @@ func Readword(filename string) []string {
 func wordToUnderscore() string {
 	sampleRegexp := regexp.MustCompile("[a-z,A-Z]")
 
-	input := hangman.word
+	input := hangman.Word
 
 	result := sampleRegexp.ReplaceAllString(input, "_")
 	return (string(result))
 }
 
 func findAndReplace(letterToReplace string) string {
-	isFound := strings.Index(hangman.word, letterToReplace)
+	if len(letterToReplace) > 1 {
+		// teste le mot ici
+		return ""
+	}
+
+	isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
-		if hangman.deathCount > 1 {
-			hangman.deathCount--
-			deathCountStage(hangman.deathCount)
+		if hangman.DeathCount > 1 {
+			hangman.DeathCount--
+			//deathCountStage(hangman.DeathCount)
 			fmt.Println("raté")
-			fmt.Println("Il vous reste", hangman.deathCount, "essais")
-			return hangman.wordhidden
+			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
+			return hangman.WordHidden
 			// mettre à jour le score
 		}
-		if hangman.deathCount == 1 {
-			hangman.deathCount--
-			deathCountStage(hangman.deathCount)
+		if hangman.DeathCount == 1 {
+			hangman.DeathCount--
+			//deathCountStage(hangman.DeathCount)
 			displayLoseMessage()
 			Retry()
 		}
 	} else {
-		str3 := []rune(hangman.wordhidden)
-		for i, lettre := range hangman.word {
+		str3 := []rune(hangman.WordHidden)
+		for i, lettre := range hangman.Word {
 			if string(lettre) == letterToReplace {
 				str3[i] = lettre
-				hangman.wordhidden = string(str3)
-				fmt.Println(hangman.wordhidden)
+				hangman.WordHidden = string(str3)
 			}
 		}
 	}
-	return hangman.wordhidden
+	return hangman.WordHidden
 }
 
 func testmot() bool {
-	hangman.count++
+	hangman.Count++
 	countPrint()
 	fmt.Println("Veuillez saisir une lettre ou un mot")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
@@ -167,13 +175,13 @@ func testmot() bool {
 
 	scanner.Scan() // l'utilisateur input dans la console
 	// lis ce que l'utilisateur a écrit
-	println(hangman.wordhidden)
+	println(hangman.WordHidden)
 	lettreoumot := scanner.Text()
 	lettreoumot = strings.ToLower(lettreoumot)
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
-	if Contains1(hangman.guessedletter, lettreoumot) {
-		fmt.Println("vous avez utilisé les lettres :", hangman.guessedletter)
+	if Contains1(hangman.Guessedletter, lettreoumot) {
+		fmt.Println("vous avez utilisé les lettres :", hangman.Guessedletter)
 		fmt.Println("vous avez deja rentré cette lettre")
 	} else {
 		if err != nil {
@@ -186,18 +194,18 @@ func testmot() bool {
 			return testmot()
 		}
 		if len(lettreoumot) == 1 {
-			hangman.guessedletter = append(hangman.guessedletter, lettreoumot)
-			fmt.Println("vous avez utilisé les lettres :", hangman.guessedletter)
+			hangman.Guessedletter = append(hangman.Guessedletter, lettreoumot)
+			fmt.Println("vous avez utilisé les lettres :", hangman.Guessedletter)
 			findAndReplace(lettreoumot)
-		} else if lettreoumot == hangman.word {
+		} else if lettreoumot == hangman.Word {
 			return true
-		} else if (len(lettreoumot) == len(hangman.word)) && hangman.wordhidden == hangman.word {
+		} else if (len(lettreoumot) == len(hangman.Word)) && hangman.WordHidden == hangman.Word {
 			return true
 		} else {
-			hangman.deathCount -= 2
-			deathCountStage(hangman.deathCount)
+			hangman.DeathCount -= 2
+			//deathCountStage(hangman.DeathCount)
 			fmt.Println("Vous n'avez pas trouvé le bon mot")
-			fmt.Println("Il vous reste", hangman.deathCount, "essais")
+			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
 		}
 	}
 	return false
@@ -205,7 +213,7 @@ func testmot() bool {
 
 func deathCountStage(death int) {
 
-	file, err := os.Open("./fichiertxt/hangman.txt")
+	file, err := os.Open("../hangman.txt")
 	if err != nil {
 		log.Fatalf("Error when opening file: %s", err)
 	}
@@ -266,18 +274,18 @@ func deathCountStage(death int) {
 // Compte le nombre de tour
 func countPrint() {
 
-	if hangman.count == 1 {
-		fmt.Println("------------", hangman.count, "er tour", "-------------")
+	if hangman.Count == 1 {
+		fmt.Println("------------", hangman.Count, "er tour", "-------------")
 	}
-	if hangman.count > 1 {
-		fmt.Println("------------", hangman.count, "ème tour", "-------------")
+	if hangman.Count > 1 {
+		fmt.Println("------------", hangman.Count, "ème tour", "-------------")
 	}
 }
 
 func Retry() {
-	hangman.count = 0
-	hangman.deathCount = 10
-	hangman.guessedletter = hangman.guessedletter1
+	hangman.Count = 0
+	hangman.DeathCount = 10
+	hangman.Guessedletter = hangman.Guessedletter1
 	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
@@ -291,7 +299,7 @@ func Retry() {
 	switch o {
 	case "1":
 		Clear()
-		hangman.guessedletter = hangman.guessedletter1
+		hangman.Guessedletter = hangman.Guessedletter1
 		debut()
 	case "2":
 		os.Exit(2)
@@ -304,15 +312,15 @@ func Retry() {
 
 func displayWinMessage() {
 	fmt.Println()
-	fmt.Println("Tu as découvert le bon mot en ", hangman.count, " essai")
-	fmt.Println("Votre mot était: ", hangman.word)
+	fmt.Println("Tu as découvert le bon mot en ", hangman.Count, " essai")
+	fmt.Println("Votre mot était: ", hangman.Word)
 	fmt.Println("Bravo, vous avez sauvé le pendu")
 }
 
 func displayLoseMessage() {
 	fmt.Println()
 	fmt.Println("Raté ! Tu n'as pas réussi à découvrir le mot")
-	fmt.Println("Votre mot choisi était : ", hangman.word)
+	fmt.Println("Votre mot choisi était : ", hangman.Word)
 	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
 }
 

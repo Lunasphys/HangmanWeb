@@ -7,6 +7,10 @@ import (
 )
 
 func main() {
+
+
+	HangmanInit()
+
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
 	tmplpage1 := template.Must(template.ParseFiles("body/page1.html"))
 
@@ -25,7 +29,7 @@ func main() {
 	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
 		val := r.FormValue("answer") //get value of form
 		print(val)
-
+		findAndReplace(val)
 		tmplpage1.Execute(w, hangman)
 	})
 	http.ListenAndServe(":80", nil)
