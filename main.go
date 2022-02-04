@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -19,7 +18,7 @@ func main() {
 	fileserver := http.FileServer(http.Dir("./js"))
 	http.Handle("/js/", http.StripPrefix("/js/", fileserver))
 
-	fmt.Printf("Starting server at port 8080\n")
+	
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 

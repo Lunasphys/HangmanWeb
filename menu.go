@@ -105,6 +105,7 @@ func startGame(filename string) *Hangman {
 	}
 	// trouve le mot et transforme le mot choisi en underscore
 }
+
 func Readword(filename string) []string {
 	file, err := os.ReadFile(filename)
 	if err != nil {
