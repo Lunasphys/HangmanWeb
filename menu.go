@@ -140,11 +140,17 @@ func wordToUnderscore() string {
 func findAndReplace(letterToReplace string) string {
 	
 	if len(letterToReplace) > 1 {
-		// teste le mot ici
+		if letterToReplace == hangman.Word {
+			hangman.WordHidden = hangman.Word
+		} else {
+			hangman.DeathCount -= 2
+		}
+		if hangman.DeathCount < 0 {
+			hangman.DeathCount = 0
+		}
 		return ""
 	}
-
-	isFound := strings.Index(hangman.Word, letterToReplace)
+		isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
 		if hangman.DeathCount >= 1 {
 			hangman.DeathCount--
