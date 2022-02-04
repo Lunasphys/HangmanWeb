@@ -93,6 +93,7 @@ func debut() {
 
 func startGame(filename string) {
 	HangmanInit()
+	Readword(filename)
 	tw := Readword(filename)
 	hangman.Word = tw[rand.Intn(len(tw))]
 
@@ -160,14 +161,14 @@ func findAndReplace(letterToReplace string) string {
 			return hangman.WordHidden
 			// mettre à jour le score
 		}
-		
+
 	} else {
 		str3 := []rune(hangman.WordHidden)
 		for i, lettre := range hangman.Word {
 			if string(lettre) == letterToReplace {
 				str3[i] = lettre
 				hangman.WordHidden = string(str3)
-			}
+			}			
 		}
 	}
 	return hangman.WordHidden
@@ -214,6 +215,7 @@ func testmot() bool {
 			fmt.Println("Vous n'avez pas trouvé le bon mot")
 			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
 		}
+		
 	}
 	return false
 }
