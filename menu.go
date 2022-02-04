@@ -19,6 +19,7 @@ type Hangman struct {
 	Guessedletter  []string
 	Guessedletter1 []string
 	Answer         string
+	
 }
 
 var hangman Hangman
