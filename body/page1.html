@@ -19,6 +19,8 @@
             {{if (eq .GameState 1)}}
                 <div>Bravo vous avez gagné</div>
             {{else}}
+            <p id="Nombredessaie">Nombre d'essais : {{.Count}} </p>
+            <p id="deathCount">essais restant : {{.DeathCount}}</p>
                 <form method="POST">
                     <label>Rentrez une lettre ou un mot:</label><br />
                     <input type="text" name="answer" autofocus><br />
@@ -26,10 +28,9 @@
                 </form>
             {{end}}
         </div>
-        <div>
-            
+        {{if (ne .DeathCount 10)}}
             <img class ="pendu" src="/style/img/hangman0.png">
-        </div>
+        {{end}}
         <div class="clavier">
             <div class="firstline" >
                 <div class="clavierA" >
