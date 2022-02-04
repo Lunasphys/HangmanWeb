@@ -8,7 +8,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
-	"time"
+
 )
 
 type Hangman struct {
@@ -30,74 +30,18 @@ func HangmanInit() {
 		Count:          0,
 		Guessedletter:  []string{},
 		Guessedletter1: []string{},
-		GameState : 0,
-	}
-	hangman.WordHidden = wordToUnderscore()
-}
-
-func Clear() {
-	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
-}
-
-func SlowPrint(str ...string) {
-	for _, strpart := range str {
-		for _, char := range strpart {
-			fmt.Print(string(char))
-
-			time.Sleep(40_000_000 * time.Nanosecond)
-		}
+		GameState:      0,
 	}
 }
 
-func start() {
-	fmt.Print("Bonjour et bienvenue dans le jeu du pendu\n")
-	fmt.Println("1 = Démarrer l'éxécution")
-	fmt.Println("2 = Non, je ne souhaite tuer personne")
-	// créer une var scanner qui va lire ce que l'utilisateur va écrire
-	scanner := bufio.NewScanner(os.Stdin)
 
-	scanner.Scan() // l'utilisateur input dans la console
 
-	// lis ce que l'utilisateur a écrit
-	o := scanner.Text()
-	switch o {
-	case "1":
-		Clear()
-		debut()
-	case "2":
-		os.Exit(2)
-	}
-}
-
-func debut() {
-	fmt.Println("Quelle bibliothèque de mot souhaitez vous choisir ? ")
-	fmt.Println("1 = Choisir la premiere version")
-	fmt.Println("2 = Choisir la deuxieme version")
-	fmt.Println("3 = Choisir la troisieme version")
-	// créer une var scanner qui va lire ce que l'utilisateur va écrire
-	scanner := bufio.NewScanner(os.Stdin)
-
-	scanner.Scan() // l'utilisateur input dans la console
-
-	// lis ce que l'utilisateur a écrit
-	o := scanner.Text()
-	switch o {
-	case "1":
-		startGame("../words.txt")
-	case "2":
-		startGame("../words2.txt")
-	case "3":
-		startGame("../words3.txt")
-	}
-}
 
 func startGame(filename string) {
 	HangmanInit()
 	Readword(filename)
-	tw := Readword(filename)
-	hangman.Word = tw[rand.Intn(len(tw))]
-
-	hangman.WordHidden = wordToUnderscore()
+	ChoseWord(filename)
+	
 	
 	/*
 		for {
@@ -109,6 +53,12 @@ func startGame(filename string) {
 		}*/
 	// trouve le mot et transforme le mot choisi en underscore
 
+}
+func ChoseWord(filename string) {
+	tw := Readword(filename)
+	hangman.Word = tw[rand.Intn(len(tw)-1)]
+	hangman.Word = hangman.Word[:len(hangman.Word)-1]
+	hangman.WordHidden = wordToUnderscore()
 }
 
 func Readword(filename string) []string {
@@ -138,10 +88,10 @@ func wordToUnderscore() string {
 	return (string(result))
 }
 
-func findAndReplace(letterToReplace string) string {
-	
+func findAndReplace(letterToReplace string) {
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
+			print(2)
 			hangman.WordHidden = hangman.Word
 		} else {
 			hangman.DeathCount -= 2
@@ -149,16 +99,16 @@ func findAndReplace(letterToReplace string) string {
 		if hangman.DeathCount < 0 {
 			hangman.DeathCount = 0
 		}
-		return ""
+		return
 	}
-		isFound := strings.Index(hangman.Word, letterToReplace)
+
+	isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
 		if hangman.DeathCount >= 1 {
 			hangman.DeathCount--
 			//deathCountStage(hangman.DeathCount)
 			fmt.Println("raté")
 			fmt.Println("Il vous reste", hangman.DeathCount, "essais")
-			return hangman.WordHidden
 			// mettre à jour le score
 		}
 
@@ -171,7 +121,12 @@ func findAndReplace(letterToReplace string) string {
 			}			
 		}
 	}
-	return hangman.WordHidden
+}
+
+func testEndGame() {
+	if hangman.WordHidden == hangman.Word {
+		hangman.GameState = 1
+	}
 }
 
 func testmot() bool {
@@ -236,7 +191,7 @@ func deathCountStage() int {
 		end = 7
 		return 9
 	}
-	
+
 	if death == 8 {
 		start = 8
 		end = 15
@@ -305,7 +260,7 @@ func countPrint() {
 func GameState() {
 	if testmot() || !Contains(hangman.WordHidden, '_') {
 		hangman.GameState = 1
-		}
+	}
 	if deathCountStage() == 0 {
 		hangman.GameState = 2
 		}
@@ -318,28 +273,7 @@ func Retry() {
 	hangman.Count = 0
 	hangman.DeathCount = 10
 	hangman.Guessedletter = hangman.Guessedletter1
-	SlowPrint("Voulez vous recommencer? \n")
-	fmt.Println("1 = Oui")
-	fmt.Println("2 = Non")
-	// créer une var scanner qui va lire ce que l'utilisateur va écrire
-	scanner := bufio.NewScanner(os.Stdin)
-
-	scanner.Scan() // l'utilisateur input dans la console
-
-	// lis ce que l'utilisateur a écrit
-	o := scanner.Text()
-	switch o {
-	case "1":
-		Clear()
-		hangman.Guessedletter = hangman.Guessedletter1
-		debut()
-	case "2":
-		os.Exit(2)
-	}
-	if !Contains(o, '1') || !Contains(o, '2') {
-		fmt.Println("Veuillez saisir une des réponses proposées")
-		Retry()
-	}
+	
 }
 
 func displayWinMessage() {

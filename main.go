@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func main() {
-
+	rand.Seed(time.Now().UTC().UnixNano())
 	startGame("./words.txt")
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
 	tmplpage1 := template.Must(template.ParseFiles("body/page1.html"))
@@ -17,7 +20,6 @@ func main() {
 	http.Handle("/js/", http.StripPrefix("/js/", fileserver))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-
 		tmplindex.Execute(w, nil)
 	})
 
@@ -25,7 +27,9 @@ func main() {
 		val := r.FormValue("answer") //get value of form
 		print(val)
 		findAndReplace(val)
+		testEndGame()
 		tmplpage1.Execute(w, hangman)
 	})
+	fmt.Println("Starting server on port 80")
 	http.ListenAndServe(":80", nil)
 }
