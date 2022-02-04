@@ -13,28 +13,6 @@ body {
 }
 
 
-.firstline{
-    display: flex;
-    width: 56%;
-    JUSTIFY-CONTENT: SPACE-AROUND;
-}
-.clavier{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    HEIGHT: 40%;
-}
-.secondline{
-    display: flex;
-    width: 56%;
-    JUSTIFY-CONTENT: SPACE-AROUND;
-}
-.thirdline{
-    display: flex;
-    width: 56%;
-    JUSTIFY-CONTENT: SPACE-AROUND;    
-}
 
 .container{
     position:relative;

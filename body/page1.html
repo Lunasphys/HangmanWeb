@@ -17,10 +17,10 @@
             <p id="mot_cache">{{.WordHidden}}</p> 
             <p id="guessedletter">Lettre utilisé : {{.Guessedletter}}</p>
             {{if (eq .GameState 1)}}
-                <div>Bravo vous avez gagné</div>
+                <p>Bravo vous avez gagné</p>
             {{end}}
             {{if (eq .GameState 2)}}
-                <div>Vous avez perdu</div>
+                <p>Vous avez perdu</p>
             {{end}}
             {{if (eq .GameState 0)}}
             <p id="Nombredessaie">Nombre d'essais : {{.Count}} </p>
@@ -33,92 +33,7 @@
             {{end}}
             </div>
             <img class ="pendu" src="/style/img/hangman{{.DeathCount}}.png">
-        <div class="clavier">
-            <div class="firstline" >
-                <div class="clavierA" >
-                    <span>A</span>
-                </div>
-                <div class="clavierB">
-                    <span>B</span>
-                </div>
-                <div class="clavierC">
-                    <span>C</span>
-                </div>
-                <div class="clavierD">
-                    <span>D</span>
-                </div>
-                <div class="clavierE">
-                    <span>E</span>
-                </div>
-                <div class="clavierF">
-                    <span>F</span>
-                </div>
-                <div class="clavierG">
-                    <span>G</span>
-                </div>
-                <div class="clavierH">
-                    <span>H</span>
-                </div>
-                <div class="clavierI">
-                    <span>I</span>
-                </div>
-                <div class="clavierJ">
-                    <span>J</span>
-                </div>
-            </div>
-            <div class="secondline">
-                <div class="clavierK">
-                    <span>K</span>
-                </div>
-                <div class="clavierL">
-                    <span>L</span>
-                </div>
-                <div class="clavierM">
-                    <span>M</span>
-                </div>
-                <div class="clavierN">
-                    <span>N</span>
-                </div>
-                <div class="clavierO">
-                    <span>O</span>
-                </div>
-                <div class="clavierP">
-                    <span>P</span>
-                </div>
-                <div class="clavierQ">
-                    <span>Q</span>
-                </div>
-                <div class="clavierR">
-                    <span>R</span>
-                </div>
-                <div class="clavierS">
-                    <span>S</span>
-                </div>
-                <div class="clavierT">
-                    <span>T</span>
-                </div>
-            </div>
-            <div class="thirdline">
-                <div class="clavierU">
-                    <span>U</span>
-                </div>
-                <div class="clavierV">
-                    <span>V</span>
-                </div>
-                <div class="clavierW">
-                    <span>W</span>
-                </div>
-                <div class="clavierX">
-                    <span>X</span>
-                </div>
-                <div class="clavierY">
-                    <span>Y</span>
-                </div>
-                <div class="clavierZ">
-                    <span>Z</span>
-                </div>
-            </div>
-    </div>
+        </div>
 </div>
 
 <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d6288936ecca89d',m:'EFggSVEdAtTQx08kNAlReg1g_whxA0XMJuB63oqjpM8-1643627845-0-AVkyI5XmAA4x7ZhCpXJwe8QuSE35w7Ay0fse/VOh4DhrJnqQsw0tkVCwMnxbqqSulA1BolyWQsFjXxxiX/xTYTj/dJ3s+NrGSWv7jxw8dHoKOgpd56GySBGy2dTZJamT1axdnC0Z4WjSkGD6GCzDOKeHU5qd7AhupmnwJ6JYqK9JZ0epamiWhIceS4JTMRoVBw==',s:[0x1cc7fef482,0xfd811ef1ed],}})();</script></body>

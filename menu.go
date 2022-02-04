@@ -8,7 +8,6 @@ import (
 	"os"
 	"regexp"
 	"strings"
-
 )
 
 type Hangman struct {
@@ -34,15 +33,11 @@ func HangmanInit() {
 	}
 }
 
-
-
-
 func startGame(filename string) {
 	HangmanInit()
 	Readword(filename)
 	ChoseWord(filename)
-	
-	
+
 	/*
 		for {
 			fmt.Println(hangman.WordHidden)
@@ -96,13 +91,13 @@ func findAndReplace(letterToReplace string) {
 
 	hangman.Count++
 	if len(letterToReplace) != 0 {
-		for _,guess := range hangman.Guessedletter {
+		for _, guess := range hangman.Guessedletter {
 			if letterToReplace == guess {
-				return 
+				return
 			}
 		}
 		hangman.Guessedletter = append(hangman.Guessedletter, letterToReplace)
-	}	
+	}
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
 			print(2)
@@ -115,7 +110,7 @@ func findAndReplace(letterToReplace string) {
 		}
 		return
 	}
-	
+
 	isFound := strings.Index(hangman.Word, letterToReplace)
 	if isFound == -1 {
 		if hangman.DeathCount >= 1 {
@@ -132,7 +127,7 @@ func findAndReplace(letterToReplace string) {
 			if string(lettre) == letterToReplace {
 				str3[i] = lettre
 				hangman.WordHidden = string(str3)
-			}			
+			}
 		}
 	}
 }
@@ -140,6 +135,8 @@ func findAndReplace(letterToReplace string) {
 func testEndGame() {
 	if hangman.WordHidden == hangman.Word {
 		hangman.GameState = 1
+	} else if hangman.DeathCount <= 0 {
+		hangman.GameState = 2
 	}
 }
 
@@ -162,7 +159,7 @@ func testmot() bool {
 			return testmot()
 		}
 		if len(lettreoumot) == 1 {
-			
+
 			findAndReplace(lettreoumot)
 		} else if lettreoumot == hangman.Word {
 			return true
@@ -172,7 +169,7 @@ func testmot() bool {
 			hangman.DeathCount -= 2
 			//deathCountStage(hangman.DeathCount)
 		}
-		
+
 	}
 	return false
 }
@@ -248,23 +245,21 @@ func deathCountStage() int {
 	return index
 }
 
-
 func GameState() {
 	if testmot() || !Contains(hangman.WordHidden, '_') {
 		hangman.GameState = 1
 	}
 	if deathCountStage() == 0 {
 		hangman.GameState = 2
-		}
+	}
 }
 
 func Retry() {
 	hangman.Count = 0
 	hangman.DeathCount = 10
 	hangman.Guessedletter = hangman.Guessedletter1
-	
-}
 
+}
 
 func Contains(s string, char rune) bool { // Si une string est contenue dans un tableau
 	for _, a := range s {
