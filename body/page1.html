@@ -15,7 +15,10 @@
             <h1> Le Jeu du Pendu</h1>
         </div>
         <div class="contain">
-             <p id="mot_cache">{{.WordHidden}}</p>
+            <p id="mot_cache">{{.WordHidden}}</p> 
+            {{if (ne.GameState 1)}}
+                <div>Bravo vous avez gagné</div>
+            {{end}}
         </div>
         <div>
             <form method="POST">

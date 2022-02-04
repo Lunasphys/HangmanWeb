@@ -7,9 +7,7 @@ import (
 
 func main() {
 
-
-	HangmanInit()
-
+	startGame("./words.txt")
 	tmplindex := template.Must(template.ParseFiles("body/index.html"))
 	tmplpage1 := template.Must(template.ParseFiles("body/page1.html"))
 
@@ -17,8 +15,6 @@ func main() {
 	http.Handle("/style/", http.StripPrefix("/style/", fs))
 	fileserver := http.FileServer(http.Dir("./js"))
 	http.Handle("/js/", http.StripPrefix("/js/", fileserver))
-
-	
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
