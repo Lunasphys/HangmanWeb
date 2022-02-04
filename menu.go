@@ -89,7 +89,12 @@ func wordToUnderscore() string {
 }
 
 func findAndReplace(letterToReplace string) {
-hangman.Count++
+	isALetter, err := regexp.MatchString("^[a-zA-Z]", letterToReplace)
+	if !isALetter || err != nil {
+		return
+	}
+
+	hangman.Count++
 	if len(letterToReplace) != 0 {
 		for _,guess := range hangman.Guessedletter {
 			if letterToReplace == guess {
@@ -98,7 +103,6 @@ hangman.Count++
 		}
 		hangman.Guessedletter = append(hangman.Guessedletter, letterToReplace)
 	}	
-
 	if len(letterToReplace) > 1 {
 		if letterToReplace == hangman.Word {
 			print(2)

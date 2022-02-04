@@ -27,10 +27,8 @@
                     <input type="submit">
                 </form>
             {{end}}
-        </div>
-        {{if (ne .DeathCount 10)}}
-            <img class ="pendu" src="/style/img/hangman0.png">
-        {{end}}
+            </div>
+            <img class ="pendu" src="/style/img/hangman{{.DeathCount}}.png">
         <div class="clavier">
             <div class="firstline" >
                 <div class="clavierA" >
