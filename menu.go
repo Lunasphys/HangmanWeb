@@ -256,9 +256,6 @@ func GameState() {
 	if deathCountStage() == 0 {
 		hangman.GameState = 2
 		}
-	if testmot() || Contains(hangman.WordHidden, '_') {
-		hangman.GameState = 0
-		}
 }
 
 func Retry() {

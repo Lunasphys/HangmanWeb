@@ -71,3 +71,8 @@ span{
     letter-spacing: 50px;
     font-size: 50px ;
 }
+
+.pendu {
+    width : 30%;
+    position: fixed;
+}
