@@ -18,11 +18,11 @@
             <p id="guessedletter">Lettre utilisé : {{.Guessedletter}}</p>
             {{if (eq .GameState 1)}}
                 <div>Bravo vous avez gagné</div>
-             {{end}}
+            {{end}}
             {{if (eq .GameState 2)}}
-            <div>Vous avez perdu, le brave homme a été pendu</div>
-            
-            {{else}}
+                <div>Vous avez perdu</div>
+            {{end}}
+            {{if (eq .GameState 0)}}
             <p id="Nombredessaie">Nombre d'essais : {{.Count}} </p>
             <p id="deathCount">essais restant : {{.DeathCount}}</p>
                 <form method="POST">
